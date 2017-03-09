@@ -1,21 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, abort, make_response, request, url_for
+from .tasks import get_tasks
 
-tasks = [
-    {
-        'id': 1,
-        'title': 'Buy groceries',
-        'description': 'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': 'Learn Python',
-        'description': 'Need to find a good Python tutorial on the web',
-        'done': False
-    }
-]
-
+tasks = get_tasks()
 app = Flask(__name__)
 
 
