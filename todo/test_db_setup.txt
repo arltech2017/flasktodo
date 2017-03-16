@@ -12,3 +12,14 @@ Create a memory resident database with some known items in the todo list:
   >>> conn.execute('''INSERT INTO "items" VALUES(2,'Learn SQL',
   ...    '2017-03-15 11:54','Complete Khan Academy SQL tutorial.',0)''')
   <sqlite3.Cursor object at 0x...>
+  >>> conn.commit
+  <built-in method commit of sqlite3.Connection object at 0x...>
+  >>> cur = conn.execute('SELECT * FROM items')
+  >>> items = []
+  >>> for row in cur:
+  ...     items.append(row)
+  >>> conn.close()
+
+With two items inserted into the database and read back out again, we have
+an items list that contains a tuple for each database row containing the
+column values as elements. These now need to be converted to JSON.
