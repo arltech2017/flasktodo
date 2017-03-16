@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS Items;
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
 CREATE TABLE Items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NUll, 
@@ -6,3 +7,4 @@ CREATE TABLE Items (
     decription TEXT,
     done BOOLEAN
 );
+COMMIT;

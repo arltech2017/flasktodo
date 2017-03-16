@@ -1,7 +1,17 @@
 import sqlite3
 
+
 def get_tasks():
-    return [
+    """
+      >>> result = get_tasks()
+      >>> len(result)
+      2
+      >>> result[0]['id']
+      1
+      >>> result[1]['title']
+      'Learn Python'
+    """
+    tasklist = [
         {
             'id': 1,
             'title': 'Buy groceries',
@@ -15,3 +25,10 @@ def get_tasks():
             'done': False
         }
     ]
+    return tasklist
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+    doctest.testfile('test_db_setup.txt', optionflags=doctest.ELLIPSIS)
