@@ -15,11 +15,17 @@ Create a memory resident database with some known items in the todo list:
   >>> conn.commit
   <built-in method commit of sqlite3.Connection object at 0x...>
   >>> cur = conn.execute('SELECT * FROM items')
-  >>> items = []
-  >>> for row in cur:
-  ...     items.append(row)
+  >>> items = cur.fetchall() 
   >>> conn.close()
 
 With two items inserted into the database and read back out again, we have
 an items list that contains a tuple for each database row containing the
-column values as elements. These now need to be converted to JSON.
+column values as elements. These now need to be converted to a Python
+dictionary.
+
+  >>> from tasks import get_tasks
+  >>> tasklist = get_tasks(items)
+  >>> len(tasklist)
+  2
+  >>> sorted(tasklist[0])
+  ['date', 'description', 'done', 'id', 'title']

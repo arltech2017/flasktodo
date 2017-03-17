@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, abort, make_response, request, url_for
-from .tasks import get_tasks
+from .tasks import retrieve_dbdata, make_tasks_list
 
-tasks = get_tasks()
+tasks = make_tasks_list(retrieve_dbdata())
 app = Flask(__name__)
 
 
@@ -43,6 +43,7 @@ def create_list():
         'id': tasks[1]['id'] + 1,
         'title': request.json['title'],
         'description': request.json.get('description', ""),
+        'date': request.json['date'],
         'done': False
     }
     tasks.append(make_public_task(task))
@@ -61,11 +62,14 @@ def update_task(task_id):
     if 'description' in request.json and \
        type(request.json['description']) != str:
         abort(400)
+    if 'date' in request.json and type(request.json['date']) != str:
+        abort(400)
     if 'done' in request.json and type(request.json['done']) != bool:
         abort(400)
     task[0]['title'] = request.json.get('title', task[0]['title'])
     task[0]['description'] = request.json.get('description',
                                               task[0]['description'])
+    task[0]['date'] = request.json.get('date', task[0]['date'])
     task[0]['done'] = request.json.get('done', task[0]['done'])
     return jsonify({'task': make_public_task(task[0])})
 

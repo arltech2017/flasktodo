@@ -1,30 +1,29 @@
 import sqlite3
 
 
-def get_tasks():
+def retrieve_dbdata():
     """
-      >>> result = get_tasks()
-      >>> len(result)
-      2
-      >>> result[0]['id']
-      1
-      >>> result[1]['title']
-      'Learn Python'
+    Read and return all todo items from the database.
     """
-    tasklist = [
-        {
-            'id': 1,
-            'title': 'Buy groceries',
-            'description': 'Milk, Cheese, Pizza, Fruit, Tylenol',
-            'done': False
-        },
-        {
-            'id': 2,
-            'title': 'Learn Python',
-            'description': 'Need to find a good Python tutorial on the web',
-            'done': False
-        }
-    ]
+    conn = sqlite3.connect('todo/todo.db')
+    cur = conn.execute('SELECT * FROM items')
+    items = cur.fetchall() 
+    conn.close()
+    return items
+
+
+def make_tasks_list(items=[]):
+    """
+    Convert a list of tuples containing task values into dictionaries with
+    key-value pairs.
+    """
+    tasklist = []
+
+    for item in items:
+        task = {'id': item[0], 'title': item[1], 'date': item[2],
+                'description': item[3], 'done': bool(item[4])}
+        tasklist.append(task)
+
     return tasklist
 
 
