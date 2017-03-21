@@ -18,12 +18,12 @@ def add_task_to_db(task):
     """
     conn = sqlite3.connect('todo/todo.db')
     insertstmt = "INSERT INTO items (title, date, description, done) "
-    insertstmt += "VALUES ('{0}', '{1}', '{2}', {3})"
+    insertstmt += "VALUES (?, ?, ?, ?)"
     title = task['title']
     date = task['date']
     desc = task['description']
     done = task['done']
-    conn.execute(insertstmt.format(title, date, desc, done))
+    conn.execute(insertstmt, (title, date, desc, done))
     conn.commit()
     conn.close()
     return True
