@@ -3,7 +3,7 @@ Create a memory resident database with some known items in the todo list:
   >>> import sqlite3
   >>> conn = sqlite3.connect(':memory:') 
   >>> conn.execute('''CREATE TABLE items (id INTEGER PRIMARY KEY AUTOINCREMENT,
-  ...    title TEXT NOT NULL, date TEXT NOT NULL, decription TEXT,
+  ...    title TEXT NOT NULL, date TEXT NOT NULL, description TEXT,
   ...    done BOOLEAN)''')
   <sqlite3.Cursor object at 0x...>
   >>> conn.execute('''INSERT INTO "items" VALUES(1,'Buy groceries',

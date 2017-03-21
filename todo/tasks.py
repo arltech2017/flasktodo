@@ -7,9 +7,26 @@ def retrieve_dbdata():
     """
     conn = sqlite3.connect('todo/todo.db')
     cur = conn.execute('SELECT * FROM items')
-    items = cur.fetchall() 
+    items = cur.fetchall()
     conn.close()
     return items
+
+
+def add_task_to_db(task):
+    """
+    Add a new task to the task database.
+    """
+    conn = sqlite3.connect('todo/todo.db')
+    insertstmt = "INSERT INTO items (title, date, description, done) "
+    insertstmt += "VALUES ('{0}', '{1}', '{2}', {3})"
+    title = task['title']
+    date = task['date']
+    desc = task['description']
+    done = task['done']
+    conn.execute(insertstmt.format(title, date, desc, done))
+    conn.commit()
+    conn.close()
+    return True
 
 
 def make_tasks_list(items=[]):

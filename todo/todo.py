@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, abort, make_response, request, url_for
-from .tasks import retrieve_dbdata, make_tasks_list
+from datetime import datetime
+from .tasks import retrieve_dbdata, make_tasks_list, add_task_to_db
 
-tasks = make_tasks_list(retrieve_dbdata())
 app = Flask(__name__)
 
 
@@ -24,11 +24,13 @@ def not_found(error):
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
+    tasks = make_tasks_list(retrieve_dbdata())
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
+    tasks = make_tasks_list(retrieve_dbdata())
     task = [task for task in tasks if task['id'] == task_id]
     if not task:
         abort(404)
@@ -36,18 +38,17 @@ def get_task(task_id):
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
-def create_list():
+def add_task():
     if not request.json or 'title' not in request.json:
         abort(400)
     task = {
-        'id': tasks[1]['id'] + 1,
         'title': request.json['title'],
         'description': request.json.get('description', ""),
-        'date': request.json['date'],
+        'date': datetime.now().strftime('%Y-%m-%d %H:%M'),
         'done': False
     }
-    tasks.append(make_public_task(task))
-    return jsonify({'task': task}), 201
+    add_task_to_db(task)
+    return get_tasks(), 201
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])

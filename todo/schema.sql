@@ -4,7 +4,7 @@ CREATE TABLE items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NUll, 
     date TEXT NOT NULL,
-    decription TEXT,
+    description TEXT,
     done BOOLEAN
 );
 COMMIT;
