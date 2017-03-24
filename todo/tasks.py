@@ -1,11 +1,25 @@
 import sqlite3
+import os
+
+TESTING_DB_PATH = 'todo/test_todo.db'
+
+
+def get_connection():
+    database_path = 'todo/todo.db'
+    if os.environ.get('TESTING') == 'True':
+        database_path = TESTING_DB_PATH
+    return sqlite3.connect(database_path)
+
+
+def drop_testing_database():
+    os.remove(TESTING_DB_PATH)
 
 
 def retrieve_dbdata():
     """
     Read and return all todo items from the database.
     """
-    conn = sqlite3.connect('todo/todo.db')
+    conn = get_connection()
     cur = conn.execute('SELECT * FROM items')
     items = cur.fetchall()
     conn.close()
@@ -16,7 +30,7 @@ def add_task_to_db(task):
     """
     Add a new task to the task database.
     """
-    conn = sqlite3.connect('todo/todo.db')
+    conn = get_connection()
     insertstmt = "INSERT INTO items (title, date, description, done) "
     insertstmt += "VALUES (?, ?, ?, ?)"
     title = task['title']
