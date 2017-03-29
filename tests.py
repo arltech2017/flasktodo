@@ -115,9 +115,9 @@ class AppTests(unittest.TestCase):
     def test_update_task_endpoint(self):
         # Get tasks and mark one as done
         self._add_items()
-        data = {}
+        data = '{"done": true}'
         headers = {'content-type': 'application/json'}
-        url = '/todo/api/v1.0/tasks'
+        url = '/todo/api/v1.0/tasks/2'
         response = self.client.put(url, headers=headers, data=data)
         result = response.get_data(as_text=True)
         tasks = json.loads(result)['tasks']
