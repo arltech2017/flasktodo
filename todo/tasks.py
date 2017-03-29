@@ -56,9 +56,3 @@ def make_tasks_list(items=[]):
         tasklist.append(task)
 
     return tasklist
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-    doctest.testfile('test_db_setup.txt', optionflags=doctest.ELLIPSIS)

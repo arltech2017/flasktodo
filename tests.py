@@ -90,6 +90,11 @@ class AppTests(unittest.TestCase):
         self.assertEqual(first_task['date'], '2017-03-15 11:51')
         self.assertEqual(first_task['done'], False)
 
+    def test_delete_task_endpoint(self):
+        # Delete item 2
+        url = '/todo/api/v1.0/tasks/2'
+        response = self.client.delete(url)
+
 
 if __name__ == '__main__':
     unittest.main()
