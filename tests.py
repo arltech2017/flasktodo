@@ -91,9 +91,26 @@ class AppTests(unittest.TestCase):
         self.assertEqual(first_task['done'], False)
 
     def test_delete_task_endpoint(self):
+        # Get the number of tasks in tasklist before delete
+        self._add_items()
+        url = '/todo/api/v1.0/tasks'
+        response = self.client.get(url)
+        result = response.get_data(as_text=True)
+        tasks = json.loads(result)['tasks']
+        num_tasks_before = len(tasks)
+
         # Delete item 2
         url = '/todo/api/v1.0/tasks/2'
         response = self.client.delete(url)
+
+        # Get the number of tasks in tasklist after delete
+        url = '/todo/api/v1.0/tasks'
+        response = self.client.get(url)
+        result = response.get_data(as_text=True)
+        tasks = json.loads(result)['tasks']
+        num_tasks_after = len(tasks)
+
+        self.assertEqual(num_tasks_before-1, num_tasks_after)
 
 
 if __name__ == '__main__':

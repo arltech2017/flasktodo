@@ -77,6 +77,7 @@ def update_task(task_id):
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
+    tasks = make_tasks_list(retrieve_dbdata())
     task = [task for task in tasks if task['id'] == task_id]
     if not task:
         abort(404)
