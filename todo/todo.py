@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, abort, make_response, request, url_for
 from datetime import datetime
-from .tasks import retrieve_dbdata, make_tasks_list, add_task_to_db
+from .tasks import retrieve_dbdata, make_tasks_list, add_task_to_db, \
+        remove_task_from_db
 
 app = Flask(__name__)
 
@@ -81,8 +82,8 @@ def delete_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if not task:
         abort(404)
-    tasks.remove(make_public_task(task[0]))
-    return jsonify({'result': True})
+    remove_task_from_db(task_id)
+    return get_tasks(), 201
 
 
 if __name__ == '__main__':

@@ -43,6 +43,18 @@ def add_task_to_db(task):
     return True
 
 
+def remove_task_from_db(task_id):
+    """
+    Remove a task from the task database.
+    """
+    conn = get_connection()
+    delstmt = "DELETE FROM items WHERE id=?"
+    conn.execute(delstmt, (task_id,))
+    conn.commit()
+    conn.close()
+    return True
+
+
 def make_tasks_list(items=[]):
     """
     Convert a list of tuples containing task values into dictionaries with
