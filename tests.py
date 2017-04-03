@@ -90,6 +90,19 @@ class AppTests(unittest.TestCase):
         self.assertEqual(first_task['date'], '2017-03-15 11:51')
         self.assertEqual(first_task['done'], False)
 
+    def test_get_task_endpoint(self):
+        # Add a couple of items
+        self._add_items()
+        # Get the first one
+        url = '/todo/api/v1.0/tasks/1'
+        response = self.client.get(url)
+        result = response.get_data(as_text=True)
+        task = json.loads(result)
+        # There should be a single task 
+        self.assertEqual(len(task), 1)
+        # with the title 'Buy groceries'
+        self.assertEqual(task['task']['title'], 'Buy groceries')
+
     def test_delete_task_endpoint(self):
         # Get the number of tasks in tasklist before delete
         self._add_items()
@@ -113,14 +126,16 @@ class AppTests(unittest.TestCase):
         self.assertEqual(num_tasks_before-1, num_tasks_after)
 
     def test_update_task_endpoint(self):
-        # Get tasks and mark one as done
+        # Get task and confirm it's not done 
         self._add_items()
-        data = '{"done": true}'
-        headers = {'content-type': 'application/json'}
-        url = '/todo/api/v1.0/tasks/2'
-        response = self.client.put(url, headers=headers, data=data)
+        url = '/todo/api/v1.0/tasks/1'
+        response = self.client.get(url)
         result = response.get_data(as_text=True)
-        tasks = json.loads(result)['tasks']
+        task = json.loads(result)
+        self.assertEqual(task['task']['done'], False)
+        # Set done to true
+        data = {'done': True}
+        self.client.put(url, data=json.dumps(data))
 
 
 if __name__ == '__main__':
