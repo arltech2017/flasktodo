@@ -60,7 +60,7 @@ def update_task_in_db(task):
     Change a field value of a task in the task database.
     """
     conn = get_connection()
-    updatestmt = "UPDATE items SET title=?, data=?, description=?, "
+    updatestmt = "UPDATE items SET title=?, date=?, description=?, "
     updatestmt += "done = ? WHERE id=?"
     title = task['title']
     date = task['date']

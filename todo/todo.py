@@ -2,7 +2,7 @@
 from flask import Flask, jsonify, abort, make_response, request, url_for
 from datetime import datetime
 from .tasks import retrieve_dbdata, make_tasks_list, add_task_to_db, \
-        remove_task_from_db
+        remove_task_from_db, update_task_in_db
 
 app = Flask(__name__)
 
@@ -74,7 +74,7 @@ def update_task(task_id):
                                               task[0]['description'])
     task[0]['date'] = request.json.get('date', task[0]['date'])
     task[0]['done'] = request.json.get('done', task[0]['done'])
-    update_task_in_db(task)
+    update_task_in_db(task[0])
     return get_tasks(), 201
 
 

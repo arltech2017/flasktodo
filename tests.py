@@ -135,7 +135,9 @@ class AppTests(unittest.TestCase):
         self.assertEqual(task['task']['done'], False)
         # Set done to true
         data = {'done': True}
-        self.client.put(url, data=json.dumps(data))
+        headers = {'content-type': 'application/json'}
+        self.client.put(url, headers=headers, data=json.dumps(data))
+        # Now confirm it is set in the database
         response = self.client.get(url)
         result = response.get_data(as_text=True)
         task = json.loads(result)
