@@ -68,6 +68,9 @@ def update_task_in_db(task):
     done = task['done']
     task_id = task['id']
     conn.execute(updatestmt, (title, date, desc, done, task_id))
+    conn.commit()
+    conn.close()
+    return True
 
 
 def make_tasks_list(items=[]):
