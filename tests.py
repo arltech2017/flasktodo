@@ -98,7 +98,7 @@ class AppTests(unittest.TestCase):
         response = self.client.get(url)
         result = response.get_data(as_text=True)
         task = json.loads(result)
-        # There should be a single task 
+        # There should be a single task
         self.assertEqual(len(task), 1)
         # with the title 'Buy groceries'
         self.assertEqual(task['task']['title'], 'Buy groceries')
@@ -126,7 +126,7 @@ class AppTests(unittest.TestCase):
         self.assertEqual(num_tasks_before-1, num_tasks_after)
 
     def test_update_task_endpoint(self):
-        # Get task and confirm it's not done 
+        # Get task and confirm it's not done
         self._add_items()
         url = '/todo/api/v1.0/tasks/1'
         response = self.client.get(url)
@@ -136,6 +136,10 @@ class AppTests(unittest.TestCase):
         # Set done to true
         data = {'done': True}
         self.client.put(url, data=json.dumps(data))
+        response = self.client.get(url)
+        result = response.get_data(as_text=True)
+        task = json.loads(result)
+        self.assertEqual(task['task']['done'], True)
 
 
 if __name__ == '__main__':
