@@ -55,6 +55,14 @@ def remove_task_from_db(task_id):
     return True
 
 
+def update_task_in_db(task_id):
+    """
+    Change a field value of a task in the task database.
+    """
+    conn = get_connection()
+    updatestmt = "UPDATE items SET items WHERE id=?"
+
+
 def make_tasks_list(items=[]):
     """
     Convert a list of tuples containing task values into dictionaries with

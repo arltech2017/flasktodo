@@ -54,6 +54,7 @@ def add_task():
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
+    tasks = make_tasks_list(retrieve_dbdata())
     task = [task for task in tasks if task['id'] == task_id]
     if not task:
         abort(404)
@@ -73,7 +74,8 @@ def update_task(task_id):
                                               task[0]['description'])
     task[0]['date'] = request.json.get('date', task[0]['date'])
     task[0]['done'] = request.json.get('done', task[0]['done'])
-    return jsonify({'task': make_public_task(task[0])})
+    update_task_in_db(task)
+    return get_tasks(), 201
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
