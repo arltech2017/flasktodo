@@ -55,12 +55,19 @@ def remove_task_from_db(task_id):
     return True
 
 
-def update_task_in_db(task_id):
+def update_task_in_db(task):
     """
     Change a field value of a task in the task database.
     """
     conn = get_connection()
-    updatestmt = "UPDATE items SET items WHERE id=?"
+    updatestmt = "UPDATE items SET title=?, data=?, description=?, "
+    updatestmt += "done = ? WHERE id=?"
+    title = task['title']
+    date = task['date']
+    desc = task['description']
+    done = task['done']
+    task_id = task['id']
+    conn.execute(updatestmt, (title, date, desc, done, task_id))
 
 
 def make_tasks_list(items=[]):
