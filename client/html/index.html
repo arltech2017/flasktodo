@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ToDo List</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+<h1>ToDo List</h1>
+<script>
+const url = 'http://zestyserver:5000/todo/api/v1.0/tasks';
+
+fetch(url)
+  .then(function(data) {
+      tasks = JSON.parse(data);
+  })
+  .catch(function() {
+      alert('Danger, Will Robinson!');
+  })
+
+console.log(tasks);
+</script>
+<p>
+
+</p>
+</body>
+</html>
