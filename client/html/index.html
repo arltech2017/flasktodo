@@ -5,24 +5,20 @@
 <title>ToDo List</title>
 <style type="text/css">
 </style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "http://zestyserver:5000/todo/api/v1.0/tasks"
+    }).then(function(data) {
+	$('#content').append(data.content);
+    });
+});
+</script>
 </head>
 <body>
 <h1>ToDo List</h1>
-<script>
-const url = 'http://zestyserver:5000/todo/api/v1.0/tasks';
-
-fetch(url)
-  .then(function(data) {
-      tasks = JSON.parse(data);
-  })
-  .catch(function() {
-      alert('Danger, Will Robinson!');
-  })
-
-console.log(tasks);
-</script>
-<p>
-
+<p id="content">
 </p>
 </body>
 </html>
