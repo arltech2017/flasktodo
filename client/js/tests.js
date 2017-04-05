@@ -1,3 +1,3 @@
-QUnit.test( "hello test", function( assert ) {
-      assert.ok( 1 == "1", "Passed!" );
+QUnit.test( "tasks test", function( assert ) {
+      assert.equal( tasks.length == 3, "Passed!" );
 });

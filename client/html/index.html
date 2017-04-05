@@ -30,7 +30,9 @@ $(document).ready(function() {
             "description": "Use good on-line resources to learn Flask.", 
             "done": false, "title": "Learn Flask", 
              "uri": "http://localhost:5000/todo/api/v1.0/tasks/3"}]}`;
-    $('#content').append(tasksstr);
+    var tasks = JSON.parse(tasksstr);
+
+    $('#content').append(JSON.stringify(tasks));
 });
 </script>
 </head>
