@@ -58,6 +58,7 @@ def get_tasks():
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
+@defaultheaders
 def get_task(task_id):
     tasks = make_tasks_list(retrieve_dbdata())
     task = [task for task in tasks if task['id'] == task_id]
@@ -67,6 +68,7 @@ def get_task(task_id):
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
+@defaultheaders
 def add_task():
     if not request.json or 'title' not in request.json:
         abort(400)
@@ -81,6 +83,7 @@ def add_task():
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
+@defaultheaders
 def update_task(task_id):
     tasks = make_tasks_list(retrieve_dbdata())
     task = [task for task in tasks if task['id'] == task_id]
@@ -107,6 +110,7 @@ def update_task(task_id):
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
+@defaultheaders
 def delete_task(task_id):
     tasks = make_tasks_list(retrieve_dbdata())
     task = [task for task in tasks if task['id'] == task_id]
