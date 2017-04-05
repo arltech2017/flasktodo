@@ -7,6 +7,33 @@ from .tasks import retrieve_dbdata, make_tasks_list, add_task_to_db, \
 app = Flask(__name__)
 
 
+"""Marco"""
+from functools import wraps
+def add_response_headers(headers={}):
+    """This decorator adds the headers passed in to the response"""
+    """http://flask.pocoo.org/snippets/100/"""
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            resp = make_response(f(*args, **kwargs))
+            h = resp.headers
+            for header, value in headers.items():
+                h[header] = value
+            return resp
+        return decorated_function
+    return decorator
+
+def defaultheaders(f):
+    """If you want to set some more default headers,
+    append them to this dict"""
+    headers = {'Access-Control-Allow-Origin': '*'}
+    @wraps(f)
+    @add_response_headers({'Access-Control-Allow-Origin': '*'})
+    def wrapper(*args, **kwargs):
+        return f(*args, **kwargs)
+    return wrapper
+
+
 def make_public_task(task):
     new_task = {}
     for field in task:
@@ -24,6 +51,7 @@ def not_found(error):
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
+@defaultheaders
 def get_tasks():
     tasks = make_tasks_list(retrieve_dbdata())
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
