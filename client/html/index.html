@@ -18,6 +18,19 @@ $(document).ready(function() {
 </script -->
 <script>
 $(document).ready(function() {
+    var tasksstr = `{"tasks": [{"date": "2017-03-15 11:51", 
+            "description": "Milk, Cheese, Pizza, Fruit, Tylenol", 
+            "done": false, "title": "Buy groceries", 
+            "uri": "http://localhost:5000/todo/api/v1.0/tasks/1"},
+            {"date": "2017-03-15 11:54",
+            "description": "Complete Khan Academy SQL tutorial.",
+            "done": false, "title": "Learn SQL", 
+            "uri": "http://localhost:5000/todo/api/v1.0/tasks/2"}, 
+            {"date": "2017-03-21 10:30",
+            "description": "Use good on-line resources to learn Flask.", 
+            "done": false, "title": "Learn Flask", 
+             "uri": "http://localhost:5000/todo/api/v1.0/tasks/3"}]}`;
+    $('#content').append(tasksstr);
 });
 </script>
 </head>
