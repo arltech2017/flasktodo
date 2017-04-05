@@ -7,16 +7,16 @@
 @import url(https://code.jquery.com/qunit/qunit-2.3.0.css);
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<!-- script>
+<script>
 $(document).ready(function() {
     $.ajax({
-        url: "http://zestyserver:5000/todo/api/v1.0/tasks"
+        url: "http://localhost:5000/todo/api/v1.0/tasks"
     }).then(function(data) {
 	$('#content').append(data.content);
     });
 });
-</script -->
-<script>
+</script>
+<!-- script>
 $(document).ready(function() {
     var tasksstr = `{"tasks": [{"date": "2017-03-15 11:51", 
             "description": "Milk, Cheese, Pizza, Fruit, Tylenol", 
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
     $('#content').append(JSON.stringify(tasks));
 });
-</script>
+</script -->
 </head>
 <body>
 <h1>ToDo List</h1>
