@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <title>ToDo List</title>
 <style type="text/css">
+@import url(https://code.jquery.com/qunit/qunit-2.3.0.css);
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
+<!-- script>
 $(document).ready(function() {
     $.ajax({
         url: "http://zestyserver:5000/todo/api/v1.0/tasks"
@@ -14,10 +15,18 @@ $(document).ready(function() {
 	$('#content').append(data.content);
     });
 });
+</script -->
+<script>
+$(document).ready(function() {
+});
 </script>
 </head>
 <body>
 <h1>ToDo List</h1>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="https://code.jquery.com/qunit/qunit-2.3.0.js"></script>
+<script src="../js/tests.js"></script>
 <p id="content">
 </p>
 </body>
