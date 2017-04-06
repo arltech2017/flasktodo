@@ -12,7 +12,8 @@ $(document).ready(function() {
     $.ajax({
         url: "http://localhost:5000/todo/api/v1.0/tasks"
     }).then(function(data) {
-	$('#content').append(data.content);
+        var tasksstr = data.content;
+	$('#content').append(tasksstr);
     });
 });
 </script>
