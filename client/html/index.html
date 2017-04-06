@@ -8,13 +8,14 @@
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+var tasks;
+
 $(document).ready(function() {
     $.ajax({
         url: "http://localhost:5000/todo/api/v1.0/tasks"
     }).then(function(data) {
-        var tasksstr = data.content;
-        alert(tasksstr);
-	// $('#content').append(tasksstr);
+        tasks = data.tasks;
+        // alert(tasks);
     });
 });
 </script>

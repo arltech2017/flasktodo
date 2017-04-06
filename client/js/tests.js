@@ -1,3 +1,3 @@
-QUnit.test( "tasksstr exists test", function( assert ) {
-      assert.equal( tasksstr, !null );
+QUnit.test("tasksstr exists test", function(assert) {
+      assert.equal(tasks.length, 3);
 });
