@@ -13,7 +13,8 @@ $(document).ready(function() {
         url: "http://localhost:5000/todo/api/v1.0/tasks"
     }).then(function(data) {
         var tasksstr = data.content;
-	$('#content').append(tasksstr);
+        alert(tasksstr);
+	// $('#content').append(tasksstr);
     });
 });
 </script>
