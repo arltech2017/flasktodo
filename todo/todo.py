@@ -71,8 +71,20 @@ def get_task(task_id):
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
 @defaultheaders
 def add_task():
+    task = {
+        'title': request.form['user'],
+        'description': request.form['description'],
+        'date': datetime.now().strftime('%Y-%m-%d %H:%M'),
+        'done': False
+    }
+    add_task_to_db(task)
+    return get_tasks()
+
+def test():
     if not request.json or 'title' not in request.json:
-        abort(400)
+        print("Error: " + request.json)
+        abort(404)
+    print("Hi")
     task = {
         'title': request.json['title'],
         'description': request.json.get('description', ""),
@@ -80,7 +92,7 @@ def add_task():
         'done': False
     }
     add_task_to_db(task)
-    return get_tasks(), 201
+    return get_tasks()
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])

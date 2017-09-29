@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ToDo List</title>
+<link rel="shortcut icon" href="">
+<style type="text/css">
+@import url(https://code.jquery.com/qunit/qunit-2.3.0.css);
+</style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+var tasks;
+
+/*$(document).ready(function() {
+    $.ajax({
+        url: "localhost:5000/todo/api/v1.0/tasks"
+    }).then(function(data) {
+        alert(data.tasks);
+        
+    });
+});*/
+$(document).ready(function(){
+    $.ajax({
+        type: 'GET',
+        url: "http://jupyter.gctaa.net:5000/todo/api/v1.0/tasks",
+        success: function(data){
+            tasks = data.tasks;
+        }
+    });
+    return false;
+});
+</script>
+<script>
+$(function(){
+    $('submitbutton').click(function(){
+        
+        $.ajax({
+            url: 'http://jupyter.gctaa.net:5000/todo/api/v1.0/tasks',
+            data: {'add': $('addform').serialize(), 'log': $('loginform').serialize()},
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+<!--script>
+$(document).ready(function() {
+    var tasksstr = `{"tasks": [{"date": "2017-03-15 11:51", 
+            "description": "Milk, Cheese, Pizza, Fruit, Tylenol", 
+            "done": false, "title": "Buy groceries", 
+            "uri": "http://localhost:5000/todo/api/v1.0/tasks/1"},
+            {"date": "2017-03-15 11:54",
+            "description": "Complete Khan Academy SQL tutorial.",
+            "done": false, "title": "Learn SQL", 
+            "uri": "http://localhost:5000/todo/api/v1.0/tasks/2"}, 
+            {"date": "2017-03-21 10:30",
+            "description": "Use good on-line resources to learn Flask.", 
+            "done": false, "title": "Learn Flask", 
+             "uri": "http://localhost:5000/todo/api/v1.0/tasks/3"}]}`;
+    var tasks = JSON.parse(tasksstr);
+
+    $('#content').append(JSON.stringify(tasks));
+});
+</script-->
+</head>
+<body>
+<h1>ToDo List</h1>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<div id = "tasksdiv">
+    
+</div>
+<div>
+    Login:
+    <form action="http://jupyter.gctaa.net:5000/todo/api/v1.0/tasks" method="post" name="loginform">
+        <div> Username: <input type="text" name="user"></div>
+        <div> Password: <input type="text" name="pass"></div>
+    </form>
+</div>
+<div>
+    Add a task: <form action="http://jupyter.gctaa.net:5000/todo/api/v1.0/tasks" method="post" name="addform">
+        <div> Title: <input type="text" name="title"></div>
+        <div> Description: <input type="text" name = "description"></div>
+        <div><input type="submit" id="submitbutton"></div>
+    </form>
+</div>
+<p id="content">
+</p>
+</body>
+</html>
