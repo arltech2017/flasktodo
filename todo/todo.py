@@ -1,12 +1,23 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, abort, make_response, request, url_for
+from flask_httpauth import HTTPBasicAuth
 from datetime import datetime
 from functools import wraps
 from .tasks import retrieve_dbdata, make_tasks_list, add_task_to_db, \
         remove_task_from_db, update_task_in_db
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 
+@auth.get_password
+def get_password(username):
+    if username == 'cash':
+        return 'pass'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
 def add_response_headers(headers={}):
     """This decorator adds the headers passed in to the response
@@ -52,6 +63,7 @@ def not_found(error):
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
+@auth.login_required
 @defaultheaders
 def get_tasks():
     tasks = make_tasks_list(retrieve_dbdata())
