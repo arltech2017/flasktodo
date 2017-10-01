@@ -12,7 +12,7 @@ auth = HTTPBasicAuth()
 @auth.get_password
 def get_password(username):
     if username == 'cash':
-        return 'pass'
+        return ''
     return None
 
 @auth.error_handler
@@ -63,7 +63,6 @@ def not_found(error):
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
-@auth.login_required
 @defaultheaders
 def get_tasks():
     tasks = make_tasks_list(retrieve_dbdata())
@@ -71,6 +70,7 @@ def get_tasks():
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
+@auth.login_required
 @defaultheaders
 def get_task(task_id):
     tasks = make_tasks_list(retrieve_dbdata())
@@ -81,6 +81,7 @@ def get_task(task_id):
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
+@auth.login_required
 @defaultheaders
 def add_task():
     task = {
@@ -92,22 +93,8 @@ def add_task():
     add_task_to_db(task)
     return get_tasks()
 
-def test():
-    if not request.json or 'title' not in request.json:
-        print("Error: " + request.json)
-        abort(404)
-    print("Hi")
-    task = {
-        'title': request.json['title'],
-        'description': request.json.get('description', ""),
-        'date': datetime.now().strftime('%Y-%m-%d %H:%M'),
-        'done': False
-    }
-    add_task_to_db(task)
-    return get_tasks()
-
-
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
+@auth.login_required
 @defaultheaders
 def update_task(task_id):
     tasks = make_tasks_list(retrieve_dbdata())
@@ -135,6 +122,7 @@ def update_task(task_id):
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
+@auth.login_required
 @defaultheaders
 def delete_task(task_id):
     tasks = make_tasks_list(retrieve_dbdata())
