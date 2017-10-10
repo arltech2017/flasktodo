@@ -5,7 +5,8 @@ TESTING_DB_PATH = 'todo/test_todo.db'
 
 
 def get_connection():
-    database_path = 'todo/todo.db'
+    global path
+    database_path = "{}/todo/todo.db".format(path)
     if os.environ.get('TESTING') == 'True':
         database_path = TESTING_DB_PATH
     return sqlite3.connect(database_path)
